@@ -10,12 +10,30 @@ cmds = [
     "..."
 ]
 
+[phases.postbuild]
+cmds = [
+    "php /app/artisan optimize:clear",
+    "php /app/artisan migrate --force",
+]
+dependsOn = ["build"]
+
+
 [start]
 cmd = '/assets/start.sh'
 
 [staticAssets]
 "start.sh" = '''
 #!/bin/bash
+
+# Enable OPcache (does this even work?)
+PHP_INI_PATH=$(php -i | grep '/php.ini' | awk '{print $6}')
+echo 'php path found: ' $PHP_INI_PATH
+# Enable opcache by adding to the bottom of the php.ini
+echo opcache.memory_consumption=256 >> "$PHP_INI_PATH"
+echo opcache.interned_strings_buffer=64 >> "$PHP_INI_PATH"
+echo opcache.max_accelerated_files=32531 >> "$PHP_INI_PATH"
+echo opcache.validate_timestamps=0 >> "$PHP_INI_PATH"
+echo opcache.enable_cli=1 >> "$PHP_INI_PATH"
 
 # Transform the nginx configuration
 node /assets/scripts/prestart.mjs /assets/nginx.template.conf /etc/nginx.conf
@@ -29,14 +47,13 @@ supervisord -c /etc/supervisord.conf -n
 file=/assets/supervisor.sock
 
 [supervisord]
-nodaemon=true
 user=root
 logfile=/var/log/supervisord.log
 logfile_maxbytes=50MB
 logfile_backups=10
 loglevel=info
 pidfile=/assets/supervisord.pid
-nodaemon=false
+nodaemon=true
 silent=false
 minfds=1024
 minprocs=200
