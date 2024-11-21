@@ -3,17 +3,27 @@
 namespace Tests\Feature;
 
 // use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Artisan;
 
-class ExampleTest extends TestCase
-{
-    /**
-     * A basic test example.
-     */
-    public function test_the_application_returns_a_successful_response(): void
-    {
-        $response = $this->get('/');
+uses(RefreshDatabase::class);
+beforeEach(function (): void {
+    Artisan::call('migrate');
+});
 
-        $response->assertStatus(200);
-    }
-}
+/**
+ * A basic test example.
+ */
+// public function test_the_application_returns_a_successful_response(): void
+// {
+//     $response = $this->get('/');
+
+//     $response->assertStatus(200);
+// }
+
+it('can interact with the database in memory', function (): void {
+    \App\Models\User::factory()->create(['name' => 'Fabrizio']);
+
+    /** @var \Illuminate\Foundation\Testing\TestCase $this */
+    $this->assertDatabaseHas('users', ['name' => 'Fabrizio']);
+});
