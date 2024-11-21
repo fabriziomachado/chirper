@@ -5,11 +5,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
 
-    User::all(); // duplicate query example
-    User::all(); // duplicate query example
-    User::all();
+    \App\Models\User::all(); // duplicate query example
+    \App\Models\User::all(); // duplicate query example
+    \App\Models\User::all();
 
-    $firstUser = User::first();
+    $firstUser = \App\Models\User::first();
     // teste 1,2,3
 
     $myString = 'Hello World!';
@@ -31,10 +31,10 @@ Route::get('/', function () {
     $products = [['id' => 1, 'price' => 10], ['id' => 2, 'price' => 50], ['id' => 3, 'price' => -5]];
 
     foreach ($products as $product) {
-        dsq('Checking product #' . $product['id']); //Send a dump without invoking the app
+        dsq('Checking product #'.$product['id']); //Send a dump without invoking the app
 
         if ($product['price'] < 0) {
-            ds('Price error in product #' . $product['id']); //App will be invoked
+            ds('Price error in product #'.$product['id']); //App will be invoked
         }
     }
 
