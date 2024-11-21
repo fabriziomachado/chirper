@@ -24,6 +24,5 @@ beforeEach(function (): void {
 it('can interact with the database in memory', function (): void {
     \App\Models\User::factory()->create(['name' => 'Fabrizio']);
 
-    /** @var \Illuminate\Foundation\Testing\TestCase $this */
     $this->assertDatabaseHas('users', ['name' => 'Fabrizio']);
 });

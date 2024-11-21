@@ -1,4 +1,5 @@
 https://github.com/igorsgm/laravel-git-hooks
+https://codingwisely.com/blog/how-to-run-pint-and-pest-on-git-hooks-with-laravel-sail
 
 ´´´sh
 docker run --rm \  

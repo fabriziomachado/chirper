@@ -10,8 +10,15 @@ parameters:
     # Level 9 is the highest level
     level: 5
 
-#    ignoreErrors:
-#        - '#PHPDoc tag @var#'
+#    bootstrapFiles:
+#        - vendor/autoload.php
+#        - tests/Pest.php
+
+    ignoreErrors:
+        - '#PHPDoc tag @var#'
+        - '#Call to an undefined method PHPUnit\\Framework\\TestCase::assertDatabaseHas#'
+        - '#Call to protected method assertDatabaseHas#'
+        - '#Undefined variable: \$this#'
 #
 #    excludePaths:
 #        - ./*/*/FileToBeExcluded.php
