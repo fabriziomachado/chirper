@@ -11,18 +11,18 @@ config:
 observers:
   auto_invoke_app: true
   enabled_in_testing: false
-  dump: false
+  dump: true
   original_dump: true
-  queries: false
-  slow_queries: false
-  mail: false
+  queries: true
+  slow_queries: true
+  mail: true
   logs: true
-  http: false
-  jobs: false
-  commands: false
-  scheduled_commands: false
-  gate: false
-  cache: false
+  http: true
+  jobs: true
+  commands: true
+  scheduled_commands: true
+  gate: true
+  cache: true
 xdebug:
   client_host: 0.0.0.0
   client_port: 9003
