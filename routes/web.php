@@ -10,7 +10,7 @@ Route::get('/', function () {
     \App\Models\User::all();
 
     $firstUser = \App\Models\User::first();
-    // teste 1,2,3
+    // teste 1,2,3,5
 
     $myString = 'Hello World!';
 

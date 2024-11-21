@@ -71,7 +71,7 @@ return [
     */
     'post-commit' => [
         \Igorsgm\GitHooks\Console\Commands\Hooks\PintPreCommitHook::class, // Laravel Pint
-        \Igorsgm\GitHooks\Console\Commands\Hooks\PHPCodeSnifferPreCommitHook::class, // PHPCS (with PHPCBF autofixer)
+        // \Igorsgm\GitHooks\Console\Commands\Hooks\PHPCodeSnifferPreCommitHook::class, // PHPCS (with PHPCBF autofixer)
         \Igorsgm\GitHooks\Console\Commands\Hooks\LarastanPreCommitHook::class, // Larastan
         \Igorsgm\GitHooks\Console\Commands\Hooks\EnlightnPreCommitHook::class, // Enlightn
         \Igorsgm\GitHooks\Console\Commands\Hooks\ESLintPreCommitHook::class, // ESLint
