@@ -33,7 +33,7 @@ RUN npm run build
 # Stage de produção: imagem enxuta, só com os arquivos necessários
 FROM base AS production
 
-USER www-data
+USER root
 
 # Copia apenas os arquivos finais do dev (já com build e node_modules removidos)
 COPY --from=development /var/www/html /var/www/html
@@ -45,6 +45,9 @@ WORKDIR /var/www/html
 RUN mkdir -p storage/logs bootstrap/cache && \
     chown -R www-data:www-data storage bootstrap && \
     chmod -R 775 storage bootstrap
+
+# Troca de volta para www-data
+USER www-data
 
 # Instala dependências do Laravel para produção
 RUN composer install --no-interaction --optimize-autoloader --no-dev
