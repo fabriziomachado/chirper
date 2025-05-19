@@ -1,13 +1,12 @@
-name: Build and Push Docker Image
+name: Build and Publish Production Image
 
 on:
   push:
-    branches: [main]  # ou a branch que você quiser monitorar
+    branches: [main]  # ou ajuste conforme necessário
 
 jobs:
-  build-and-push:
+  build:
     runs-on: ubuntu-latest
-
     permissions:
       contents: read
       packages: write
@@ -23,10 +22,12 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build da imagem Docker
+      - name: Build imagem de produção
         run: |
-          docker build -t ghcr.io/${{ github.repository_owner }}/chirper:latest .
+          docker build \
+            --target production \
+            -t ghcr.io/${{ github.repository_owner }}/chirper:latest .
 
-      - name: Push da imagem para o GitHub Container Registry
+      - name: Push imagem para GHCR
         run: |
           docker push ghcr.io/${{ github.repository_owner }}/chirper:latest
