@@ -1,0 +1,32 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches: [main]  # ou a branch que você quiser monitorar
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
+
+      - name: Login no GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build da imagem Docker
+        run: |
+          docker build -t ghcr.io/${{ github.repository_owner }}/chirper:latest .
+
+      - name: Push da imagem para o GitHub Container Registry
+        run: |
+          docker push ghcr.io/${{ github.repository_owner }}/chirper:latest
