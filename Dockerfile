@@ -4,8 +4,13 @@ FROM base AS development
 ENV PHP_OPCACHE_ENABLE=1
 
 USER root
-ARG USER_ID
-ARG GROUP_ID
+
+# ARG USER_ID
+# ARG GROUP_ID
+ARG USER_ID=1000
+ARG GROUP_ID=1000
+ENV USER_ID=${USER_ID}
+ENV GROUP_ID=${GROUP_ID}
 
 RUN install-php-extensions intl bcmath
 
