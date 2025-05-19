@@ -17,12 +17,24 @@ RUN docker-php-serversideup-set-id www-data $USER_ID:$GROUP_ID && \
 
 USER www-data
 
-FROM base AS production
-
+# Copia código para o build de desenvolvimento
 COPY --chown=www-data:www-data . /var/www/html
 
-
+# Build dos assets no stage dev
+WORKDIR /var/www/html
 RUN npm install
 RUN npm run build
+
+# Stage de produção: imagem enxuta, só com os arquivos necessários
+FROM base AS production
+
+USER www-data
+
+# Copia apenas os arquivos finais do dev (já com build e node_modules removidos)
+COPY --from=development /var/www/html /var/www/html
+# COPY --chown=www-data:www-data . /var/www/html
+
+WORKDIR /var/www/html
+
 
 RUN composer install --no-interaction --optimize-autoloader --no-dev
