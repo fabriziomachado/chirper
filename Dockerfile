@@ -41,5 +41,10 @@ COPY --from=development /var/www/html /var/www/html
 
 WORKDIR /var/www/html
 
+# Corrigir permissões
+RUN mkdir -p storage/logs bootstrap/cache && \
+    chown -R www-data:www-data storage bootstrap && \
+    chmod -R 775 storage bootstrap
 
+# Instala dependências do Laravel para produção
 RUN composer install --no-interaction --optimize-autoloader --no-dev
